@@ -1,3 +1,5 @@
 #muistipeli {}
 
-.kortti {}
+.kortti {
+  background-color: var(--gray);
+}

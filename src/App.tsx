@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import './style/style.css'
 import { Route, Routes } from 'react-router-dom'
 import Vastakohtamuistipeli from './components/Vastakohtamuistipeli'
 

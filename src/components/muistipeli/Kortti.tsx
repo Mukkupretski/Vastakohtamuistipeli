@@ -7,5 +7,5 @@ type Props = {
 }
 
 export default function Kortti({ käännetty, onClick, teksti }: Props) {
-  return <button onClick={onClick} className='kortti'>{käännetty ? teksti : ""}</button>
+  return <button onClick={onClick} className='kortti'>{teksti}{käännetty ? teksti : ""}</button>
 }

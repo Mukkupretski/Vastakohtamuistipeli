@@ -1,12 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: content-box;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
 
 :root {
+  font-size: 16px;
   --gray: #D9D9D9;
   --dblue: #0D47A1;
   --blue: #2196F3;
   --lblue: #E3F2FD;
+}
+
+.bluebox {
+  border: 3px solid var(--dblue);
+  background-color: var(--lblue);
+}
+
+.button {
+  background-color: var(--blue);
+  border-radius: 10px;
+}
+
+.title-1 {
+  color: var(--dblue);
+  font-weight: bold;
+  font-size: 1.75em;
+}
+
+.title-2 {
+  color: var(--blue);
+  font-weight: 500;
+  font-size: 1.75em;
+}
+
+.text-1 {
+
+  color: black;
+  font-weight: 300;
+  font-size: 1.4em;
 }
