@@ -7,7 +7,7 @@ type Pairlist = [string, string][];
 type Wordclass = "adjektiivit" | "verbit" | "substantiivit" | "muut";
 type Wordlist = { "verbit": Pairlist, "adjektiivit": Pairlist, "substantiivit": Pairlist, "muut": Pairlist }
 const emptyWordlist: Wordlist = { "verbit": [], "adjektiivit": [], "substantiivit": [], "muut": [] }
-type Word = { word: string, wordclass: string }
+type Word = { word: string, wordclass: Wordclass }
 const classes: Wordclass[] = ["adjektiivit", "verbit", "substantiivit", "muut"]
 type Card = {
   pair: string;
@@ -21,17 +21,21 @@ type Gamestate = {
   found: Wordlist;
 }
 
+
+// seconds
+const odotusaika: number = 0.5
+
 // returns random permutation of {0,..., n-1}
 function permute(n: number) {
-  let ls = [];
+  let ls: number[] = [];
   for (let index = 0; index < n; index++) {
     ls.push(index)
   }
   const res = [];
   for (let i = 0; i < n; i++) {
-    const pos = Math.floor(Math.random() * (n - i))
-    res.push(ls[pos])
-    ls = ls.filter(el => el != pos);
+    const val = ls[Math.floor(Math.random() * (n - i))]
+    res.push(val)
+    ls = ls.filter(el => el != val);
   }
   return res;
 }
@@ -70,33 +74,81 @@ function pickK<T>(list: T[], k: number): T[] {
   }
   return res
 }
-function capital(s: string) {
+export function capital(s: string) {
   return s.at(0)?.toUpperCase() + s.slice(1)
 }
 
 export default function Vastakohtamuistipeli() {
+  const [tries, setTries] = useState(0)
   const [words, setWords] = useState<Wordlist>({ ...emptyWordlist });
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [gamestate, setGamestate] = useState<Gamestate>({ cards: [], canPlay: false, found: { "verbit": [["git", "lol"]], "adjektiivit": [["get", "lol"], ["got", "lol"]], "substantiivit": [], "muut": [] } });
+  const [gamestate, setGamestate] = useState<Gamestate>({ cards: [], canPlay: false, found: { ...emptyWordlist } });
+  const handleCorrect = () => {
+    const flipPair = gamestate.cards.filter(c => c.flipped)
+
+    setGamestate(gs => {
+      const wordclass = flipPair[0].word.wordclass
+
+      return {
+        ...gs,
+        cards: gs.cards.filter(c => !c.flipped),
+        found: {
+          ...gs.found,
+          [wordclass]: [
+            ...gs.found[wordclass],
+            [flipPair[0].word.word, flipPair[1].word.word]
+          ]
+        }
+      }
+    })
+  }
+  const handleIncorrect = () => {
+    setGamestate(gs => ({ ...gs, canPlay: false }))
+    setTimeout(() => {
+      setGamestate(gs => ({
+        ...gs,
+        canPlay: true,
+        cards: gs.cards.map(c => ({ ...c, flipped: false }))
+      }))
+    }, odotusaika * 1000)
+  }
+  const handlePlay = () => {
+    if (!gamestate.canPlay) return
+    const flipPair = gamestate.cards.filter(c => c.flipped)
+    if (flipPair.length < 2) return
+    setTries(t => t + 1)
+    if (flipPair[0].pair == flipPair[1].word.word) handleCorrect()
+    else handleIncorrect()
+  }
+  useEffect(() => {
+    handlePlay()
+  }, [gamestate])
+  // Aloita peli, kun sanat ladattu
+  useEffect(() => {
+    if (!loaded) return
+    startGame()
+  }, [loaded])
+  // Ilmoita, kun sanat ladattu
   useEffect(() => {
     let fail = false
     classes.forEach(l => { if (words[l].length == 0) fail = true })
     if (fail) return
     setLoaded(true);
   }, [words])
+  // Lataa sanat
   useEffect(() => {
     classes.forEach(luokka =>
       fetch(`/sanat/${luokka}.txt`).then(res => res.text()).then(sanalista => setWords(s => {
-        s[luokka] = sanalista.split("\n").filter(asia => asia).map(sanamasiina =>
+        const s2 = { ...s }
+        s2[luokka] = sanalista.split("\n").filter(asia => asia).map(sanamasiina =>
           [sanamasiina.split(" ")[0], sanamasiina.split(" ")[1]]
         )
-        return s
+        return s2
       }
       )).catch(console.log)
     )
   }, [])
-  const addCards = (wordclass: string, pair: [string, string], perm: number[], i: number, cards: Card[]) => {
-    console.log(pair)
+  const addCards = (wordclass: Wordclass, pair: [string, string], perm: number[], i: number, cards: Card[]) => {
     cards.push({
       pos: perm[i + 1],
       flipped: false,
@@ -117,7 +169,6 @@ export default function Vastakohtamuistipeli() {
     })
   }
   const startGame = () => {
-    console.log(words)
     const adj = pickK(words.adjektiivit, 4)
     const ver = pickK(words.verbit, 3)
     const sub = pickK(words.substantiivit, 3)
@@ -143,10 +194,6 @@ export default function Vastakohtamuistipeli() {
     })
     setGamestate({ cards: cards, canPlay: true, found: { ...emptyWordlist } })
   }
-  useEffect(() => {
-    if (!loaded) return
-    startGame()
-  }, [loaded])
   return <div style={
     {
       display: "flex",
@@ -154,16 +201,26 @@ export default function Vastakohtamuistipeli() {
       height: "100vh"
     }
   }>
-    <div style={{
-      display: "grid",
-      gridTemplateRows: "1fr 1fr 1fr 1fr",
-      gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
-      rowGap: "15px",
-      columnGap: "15px",
-      width: "75vw"
+    <p className='text-1' style={
+      {
+        position: "absolute",
+        top: "1em",
+        left: "1em",
+
+      }
+    }>Käännöt: {tries}</p>
+    <div id='muistipeli' style={{
     }}>
       {gamestate.cards.map(c => {
-        return <Kortti key={c.pos} teksti={c.word.word} käännetty={c.flipped} onClick={() => { }}></Kortti>
+        return <Kortti pos={c.pos} key={c.pos} teksti={c.word.word} käännetty={c.flipped} onClick={() => {
+          if (!gamestate.canPlay) return
+          setGamestate(gs => ({
+            ...gs, cards: gs.cards.map((ca) => {
+              if (ca.pos != c.pos) return ca
+              return { ...ca, flipped: true }
+            })
+          }))
+        }}></Kortti>
       })}
     </div>
     <div id='found' className='bluebox' style={{
