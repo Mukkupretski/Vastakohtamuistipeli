@@ -1,11 +1,12 @@
 import 'react'
 import './muistipeli/muistipeli.css'
-import { startTransition, useEffect, useState } from 'react'
+import { startTransition, useEffect, useRef, useState } from 'react'
 import Kortti from './muistipeli/Kortti';
+import Enddialog from './muistipeli/Enddialog';
 
 type Pairlist = [string, string][];
 type Wordclass = "adjektiivit" | "verbit" | "substantiivit" | "muut";
-type Wordlist = { "verbit": Pairlist, "adjektiivit": Pairlist, "substantiivit": Pairlist, "muut": Pairlist }
+export type Wordlist = { "verbit": Pairlist, "adjektiivit": Pairlist, "substantiivit": Pairlist, "muut": Pairlist }
 const emptyWordlist: Wordlist = { "verbit": [], "adjektiivit": [], "substantiivit": [], "muut": [] }
 type Word = { word: string, wordclass: Wordclass }
 const classes: Wordclass[] = ["adjektiivit", "verbit", "substantiivit", "muut"]
@@ -79,10 +80,27 @@ export function capital(s: string) {
 }
 
 export default function Vastakohtamuistipeli() {
+  const enddialogRef = useRef<HTMLDialogElement>(null)
   const [tries, setTries] = useState(0)
   const [words, setWords] = useState<Wordlist>({ ...emptyWordlist });
   const [loaded, setLoaded] = useState<boolean>(false);
   const [gamestate, setGamestate] = useState<Gamestate>({ cards: [], canPlay: false, found: { ...emptyWordlist } });
+  const restart = () => {
+    enddialogRef.current?.close()
+    setTries(0)
+    startGame()
+
+  }
+  const win = () => {
+    setGamestate(gs => ({ ...gs, canPlay: false }))
+    enddialogRef.current?.showModal()
+  }
+  useEffect(() => {
+    if (!gamestate.canPlay) return
+    if (gamestate.found.adjektiivit.length + gamestate.found.substantiivit.length + gamestate.found.verbit.length + gamestate.found.muut.length == 12) {
+      win()
+    }
+  }, [gamestate])
   const handleCorrect = () => {
     const flipPair = gamestate.cards.filter(c => c.flipped)
 
@@ -194,59 +212,52 @@ export default function Vastakohtamuistipeli() {
     })
     setGamestate({ cards: cards, canPlay: true, found: { ...emptyWordlist } })
   }
-  return <div style={
-    {
-      display: "flex",
-      flexDirection: 'row',
-      height: "100vh"
-    }
-  }>
-    <p className='text-1' style={
-      {
-        position: "absolute",
-        top: "1em",
-        left: "1em",
+  return <>
+    <Enddialog found={gamestate.found} ref={enddialogRef} onRestart={() => {
+      restart()
+    }}></Enddialog>
 
-      }
-    }>Käännöt: {tries}</p>
-    <div id='muistipeli' style={{
-    }}>
-      {gamestate.cards.map(c => {
-        return <Kortti pos={c.pos} key={c.pos} teksti={c.word.word} käännetty={c.flipped} onClick={() => {
-          if (!gamestate.canPlay) return
-          setGamestate(gs => ({
-            ...gs, cards: gs.cards.map((ca) => {
-              if (ca.pos != c.pos) return ca
-              return { ...ca, flipped: true }
-            })
-          }))
-        }}></Kortti>
-      })}
-    </div>
-    <div id='found' className='bluebox' style={{
-      padding: "2em",
-      display: "flex",
-      flexDirection: "column",
-      width: "25vw",
-      alignItems: "center"
+    <div id='memocontainer' >
+      <p className='text-1' style={
+        {
+          position: "absolute",
+          top: "1em",
+          left: "1em",
 
-    }}>
-      <h2 className='title-1' style={{
-        marginBottom: "1.5em"
-      }}>LÖYDETYT PARIT</h2>
-      {Object.entries(gamestate.found).map(([wclass, list]) => {
-        if (list.length == 0) return <></>
-        return <div key={wclass} style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
+        }
+      }>Käännöt: {tries}</p>
+      <div id='muistipeli' style={{
+      }}>
+        {gamestate.cards.map(c => {
+          return <Kortti pos={c.pos} key={c.pos} teksti={c.word.word} käännetty={c.flipped} onClick={() => {
+            if (!gamestate.canPlay) return
+            setGamestate(gs => ({
+              ...gs, cards: gs.cards.map((ca) => {
+                if (ca.pos != c.pos) return ca
+                return { ...ca, flipped: true }
+              })
+            }))
+          }}></Kortti>
+        })}
+      </div>
+      <div id='found' className='bluebox'>
+        <h2 className='title-1' style={{
           marginBottom: "1.5em"
-        }}>
-          <h3 className='title-2' style={{ marginBottom: "0.5em" }}>{capital(wclass)}</h3>
-          {list.map((pair) => <p key={pair[0]} style={{ marginBottom: "0.2em" }} className='text-1'>{capital(pair[0])} - {capital(pair[1])}</p>)}
-        </div>
-      })}
+        }}>LÖYDETYT PARIT</h2>
+        {Object.entries(gamestate.found).map(([wclass, list]) => {
+          if (list.length == 0) return <></>
+          return <div key={wclass} style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            marginBottom: "1.5em"
+          }}>
+            <h3 className='title-2' style={{ marginBottom: "0.5em" }}>{capital(wclass)}</h3>
+            {list.map((pair) => <p key={pair[0]} style={{ marginBottom: "0.2em" }} className='text-1'>{capital(pair[0])} - {capital(pair[1])}</p>)}
+          </div>
+        })}
+      </div>
     </div>
-  </div>
+  </>
 }

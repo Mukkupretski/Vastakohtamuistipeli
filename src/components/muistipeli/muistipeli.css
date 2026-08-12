@@ -1,3 +1,10 @@
+/* Peli ja kortit */
+#memocontainer {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
 #muistipeli {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -14,4 +21,123 @@
   border: none;
   outline: none;
   border-radius: 10px;
+}
+
+#found {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  align-items: center;
+}
+
+/* game area a11y */
+@media (width <=800px) {
+  #memocontainer {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+  }
+
+  #muistipeli {
+    width: calc(100% - 6em);
+    aspect-ratio: 1 / 1;
+  }
+
+  .kortti {
+    border-radius: 5px;
+  }
+
+  #found {
+    width: 75%;
+    margin-bottom: 20px;
+  }
+
+}
+
+@media (width <=550px) {
+  #muistipeli {
+    border-radius: 3px;
+    padding-inline: 1em;
+    width: calc(100% - 2em);
+  }
+}
+
+/* Voittodialogi */
+#enddialog {
+  width: 75vw;
+  outline: none;
+  margin: auto;
+}
+
+#enddialog>div {
+  width: calc(100% - 4em);
+  height: calc(100% - 4em);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em;
+}
+
+.buttonrow {
+  margin-top: 3em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+}
+
+.buttonrow>button {
+  width: 75px;
+  height: 75px;
+}
+
+#endfound {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin-top: 2em;
+}
+
+.wordclassfound {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+
+#enddialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* enddialog a11y */
+@media (width <=850px) {
+  #enddialog {
+    width: 80vw;
+  }
+
+  #endfound {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 2em;
+  }
+
+  .wordclassfound {
+    align-items: center;
+    text-align: center;
+  }
+
+  .buttonrow>button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .buttonrow>button>img {
+    width: 40px;
+    height: 40px;
+  }
 }

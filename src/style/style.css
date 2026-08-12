@@ -11,12 +11,28 @@
     "wdth" 100;
 }
 
+
 :root {
   font-size: 16px;
   --gray: #D9D9D9;
   --dblue: #0D47A1;
   --blue: #2196F3;
+  --mblue: #42A5F5;
   --lblue: #E3F2FD;
+}
+
+@media (width <=550px) {
+  :root {
+
+    font-size: 12px;
+  }
+}
+
+@media (width <=400px) {
+  :root {
+
+    font-size: 10px;
+  }
 }
 
 .bluebox {
@@ -35,6 +51,13 @@
   font-size: 1.75em;
 }
 
+.title-0 {
+  color: var(--dblue);
+  font-weight: bold;
+  font-size: 2.2em;
+  letter-spacing: 0.1em;
+}
+
 .title-2 {
   color: var(--blue);
   font-weight: 500;
@@ -46,4 +69,27 @@
   color: black;
   font-weight: 300;
   font-size: 1.4em;
+}
+
+.text-2 {
+
+  color: black;
+  font-weight: 400;
+  font-size: 1.1em;
+}
+
+.iconbutton {
+  background-color: var(--blue);
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.iconbutton:hover {
+  cursor: pointer;
+  background-color: var(--mblue);
 }

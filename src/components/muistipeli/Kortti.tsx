@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function Kortti({ pos, käännetty, onClick, teksti }: Props) {
-  return <button onClick={onClick} style={{
+  return <button onClick={onClick} aria-label='Kortti' style={{
     gridRow: `${Math.floor(pos / 4) + 1}`,
     gridColumn: `${(pos % 4) + 1}`,
   }} className='kortti text-1'>{käännetty ? capital(teksti) : ""}</button>
