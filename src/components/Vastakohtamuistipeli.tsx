@@ -1,6 +1,6 @@
 import 'react'
 import './muistipeli/muistipeli.css'
-import { startTransition, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Kortti from './muistipeli/Kortti';
 import Enddialog from './muistipeli/Enddialog';
 
@@ -54,16 +54,6 @@ function combine(n: number, k: number) {
     ls = ls.filter(el => el != pos);
   }
   return res;
-}
-function shuffle<T>(list: T[]): T[] {
-  const order = permute(list.length)
-  const res = [
-
-  ]
-  for (let i = 0; i < list.length; i++) {
-    res.push(list[order[i]])
-  }
-  return res
 }
 function pickK<T>(list: T[], k: number): T[] {
   const order = combine(list.length, k)
