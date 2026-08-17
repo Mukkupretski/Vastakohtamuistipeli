@@ -23,7 +23,11 @@ for i, rowi in df.iterrows():
 # read
 with open('output/graph.txt', 'r', encoding='utf-8') as f:
     graph = [[int(line.split(" ")[0]),int(line.split(" ")[1])] for line in f.readlines()] 
-graph
+len(graph)
+for i in range(200, 225):
+    print(compound(graph[i][0],df),compound(graph[i][1],df))
+
+
 
 # write
 with open('output/graph.txt', 'w', encoding='utf-8') as f:
@@ -53,8 +57,8 @@ with open('output/smallgraph.txt', 'r', encoding='utf-8') as f:
 smallgraph
 
 # print stuff
-def compound(i):
-    return df.iloc[i]["Compound Word"]
+def compound(i,data):
+    return data.loc[i]["Compound Word"]
 for i in range(20):
     print(compound(smallgraph[i][0]), compound(smallgraph[i][1]))
 
@@ -105,7 +109,7 @@ cycles = find_cycles(smallgraph, 16)
 for cycle in cycles:
     print('\n')
     for i in cycle:
-        print(compound(i) ,end=' ')
+        print(compound(i,df) ,end=' ')
 
 
 

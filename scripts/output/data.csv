@@ -125,7 +125,6 @@
 123,energialaitos
 124,energialaitostutkimus
 125,energiansäästö
-126,energiansäästö
 127,energiansäästöideat
 128,energiansäästömahdollisuudet
 129,energiansäästöohjeet
@@ -173,7 +172,6 @@
 171,energiateollisuusyhtiö
 172,energiatuotantolinjasto
 173,energiavaranto
-174,energiavaranto
 175,energiavarat
 176,energiavaratutkimus
 177,energiayksikkölaskenta
@@ -226,7 +224,6 @@
 224,joukkoliikennematkat
 225,joukkoliikennereitti
 226,joukkoliikenneyhteys
-227,joukkoliikenneyhteys
 228,joukkueenjohtaja
 229,joukkuekilpailu
 230,juhlapyhä
@@ -248,15 +245,12 @@
 246,kalastuksenvalvonta
 247,kalastusalue
 248,kalastusalus
-249,kalastusalus
 250,kalastuslaitos
 251,kalastuslupa
 252,kalastusmatkailu
 253,kalastusmatkailukeskus
 254,kalastustarvike
-255,kalastustarvike
 256,kalastusvene
-257,kalastusvene
 258,kalenterivuosi
 259,kallioperätutkimus
 260,kansainvälinen
@@ -351,13 +345,11 @@
 349,koulutusmateriaalipaketti
 350,koulutusmateriaaliprojekti
 351,koulutusmateriaalit
-352,koulutusmateriaalit
 353,koulutusmateriaalivalvonta
 354,koulutusohjelma
 355,koulutusohjelmainsinööri
 356,koulutusohjelmajohtaja
 357,koulutusohjelmakartoitus
-358,koulutusohjelmakartoitus
 359,koulutusohjelmankehitys
 360,koulutusohjelmapalvelu
 361,koulutusohjelmaprojekti
@@ -397,7 +389,6 @@
 395,kulttuurihistoriallinen
 396,kulttuurihistoriallinenalue
 397,kulttuurikeskus
-398,kulttuurikeskus
 399,kulttuurimaisema
 400,kulttuurimaisemanhoito
 401,kulttuurimatkailu
@@ -407,7 +398,6 @@
 405,kulttuuriperintö
 406,kulttuuriperintöhallinto
 407,kulttuuriperintöhanke
-408,kulttuuriperintöhanke
 409,kulttuuriperintökohde
 410,kulttuuritapahtuma
 411,kulttuuritapahtumaohjelma
@@ -423,7 +413,6 @@
 421,kyläkoulu
 422,kylämatkailu
 423,kylätapahtuma
-424,kylätapahtuma
 425,kylpyhuone
 426,kylpylähotelli
 427,laivaliikenne
@@ -485,14 +474,12 @@
 483,liikennesuunnitteluhanke
 484,liikennesuunnittelukeskus
 485,liikennesuunnittelumalli
-486,liikennesuunnittelumalli
 487,liikennesuunnitteluohjeet
 488,liikennesuunnitteluratkaisut
 489,liikennetuotantoyksikkö
 490,liikennetuotantoyksikkövalvonta
 491,liikenneturvallisuus
 492,liikenneturvallisuusanalyysi
-493,liikenneturvallisuusanalyysi
 494,liikenneturvallisuuskoulutus
 495,liikenneturvallisuuskoulutusohjelma
 496,liikenneturvallisuusmoduuli
@@ -555,7 +542,6 @@
 553,liiketoimintaratkaisukonsultti
 554,liiketoimintaratkaisut
 555,liiketoimintasuunnitelma
-556,liiketoimintasuunnitelma
 557,liiketoimintasuunnitteluosasto
 558,liiketoimintayhteisöprojekti
 559,liiketoimintayhteistyösopimus
@@ -566,7 +552,6 @@
 564,liikuntaharrastusmahdollisuudet
 565,liikuntakerho
 566,liikuntakeskus
-567,liikuntakeskus
 568,liikuntakeskustarjonta
 569,liikuntapainotteinen
 570,liikuntapeli
@@ -592,7 +577,6 @@
 590,luonnonpuistoyhteistyö
 591,luonnonsuojelualue
 592,luonnonsuojelualuekartoitus
-593,luonnonsuojelualuekartoitus
 594,luonnonsuojelukampanja
 595,luonnonsuojelukampanjasuunnitelma
 596,luonnonsuojelukeskus
@@ -600,7 +584,6 @@
 598,luonnonsuojelukoulutuskeskus
 599,luonnonsuojelukoulutusohjelma
 600,luonnonsuojelulaki
-601,luonnonsuojelulaki
 602,luonnonsuojelulupa
 603,luonnonsuojeluohjelmatarjonta
 604,luonnonsuojeluprojektitarjonta
@@ -609,7 +592,6 @@
 607,luonnonsuojelututkimusprojekti
 608,luonnonsuojeluyhdistys
 609,luonnonsuojeluyksikkö
-610,luonnonsuojeluyksikkö
 611,luonnonsuojeluyksikköanalyysi
 612,luonnonsuojeluyksikköohjaus
 613,luonnonvaraekosysteemi
@@ -618,11 +600,9 @@
 616,luonnonvaraintutkimus
 617,luonnonvarakartoitustutkimus
 618,luonnonvarakeskus
-619,luonnonvarakeskus
 620,luonnonvarakeskusprojekti
 621,luonnonvarakeskusyhteistyö
 622,luonnonvaratalous
-623,luonnonvaratalous
 624,luonnonvarataloustutkimus
 625,luonnonvaratutkimus
 626,luonnonvaratutkimusyhteistyö
@@ -645,14 +625,12 @@
 643,maaseutumatkailu
 644,maatalousalue
 645,maatalouskone
-646,maatalouskone
 647,maatalouskoneenkorjaaja
 648,maatalouskonekorjaamo
 649,maatalouskonevalmistaja
 650,maatalousneuvonta
 651,maatalousneuvontapalvelu
 652,maatalouspolitiikka
-653,maatalouspolitiikka
 654,maatalouspolitiikkaehdotus
 655,maatalouspolitiikkatavoite
 656,maatalouspolitiikkayksikkö
@@ -675,7 +653,6 @@
 673,matkailukeskustiedotus
 674,matkailukeskustutkimus
 675,matkailukohde
-676,matkailukohde
 677,matkailukohdeopas
 678,matkailukohdesuunnittelu
 679,matkailukohteidenhallinta
@@ -728,7 +705,6 @@
 726,matkustajalaiva
 727,matkustajalautta
 728,matkustajaliikenne
-729,matkustajaliikenne
 730,matkustajamäärä
 731,matkustusrajoitus
 732,merenkulku
@@ -819,7 +795,6 @@
 817,oppimateriaalinvalmistus
 818,oppimateriaalipaketti
 819,oppimateriaaliratkaisut
-820,oppimateriaaliratkaisut
 821,oppimateriaalit
 822,oppimateriaalivalikoima
 823,oppimateriaalivalikoimat
@@ -832,7 +807,6 @@
 830,oppimisympäristökehitys
 831,oppimisympäristökonsultointi
 832,oppimisympäristömalli
-833,oppimisympäristömalli
 834,oppimisympäristönkehittäjä
 835,oppimisympäristöratkaisut
 836,oppimisympäristöstrategia
@@ -863,7 +837,6 @@
 861,pelastusliivi
 862,pelastuspalvelu
 863,pelastustehtävä
-864,pelastustehtävä
 865,pelastusvene
 866,perheenjäsen
 867,perhehoito
@@ -914,7 +887,6 @@
 912,rakennuslupahakemus
 913,rakennuslupamenettely
 914,rakennusmateriaali
-915,rakennusmateriaali
 916,rakennusmateriaalihanke
 917,rakennusmateriaalikeskus
 918,rakennusmateriaalikierrätys
@@ -923,11 +895,8 @@
 921,rakennusmateriaalimarkkinat
 922,rakennusmateriaaliratkaisu
 923,rakennusmateriaalit
-924,rakennusmateriaalit
 925,rakennusmateriaalitutkimus
-926,rakennusmateriaalitutkimus
 927,rakennusmateriaalitutkimuskeskus
-928,rakennusmateriaalitutkimuskeskus
 929,rakennusmateriaalivalmistaja
 930,rakennusmateriaalivarastointi
 931,rakennusmestari
@@ -935,7 +904,6 @@
 933,rakennusohjelma
 934,rakennuspalvelut
 935,rakennusprojekti
-936,rakennusprojekti
 937,rakennusprojektijärjestäjä
 938,rakennusprojektikartoitus
 939,rakennusprojektikehitys
@@ -953,11 +921,9 @@
 951,rakennussuojelutoimisto
 952,rakennussuunnitelma
 953,rakennussuunnittelija
-954,rakennussuunnittelija
 955,rakennussuunnittelukonsultointi
 956,rakennussuunnittelumalli
 957,rakennussuunnitteluohjelma
-958,rakennussuunnitteluohjelma
 959,rakennussuunnitteluratkaisu
 960,rakennussuunnitteluratkaisut
 961,rakennussuunnittelutoimisto
@@ -976,13 +942,11 @@
 974,rakennusteknologiahanke
 975,rakennusteknologiainsinööri
 976,rakennusteknologiakoulutus
-977,rakennusteknologiakoulutus
 978,rakennusteknologiaprojekti
 979,rakennusteknologiayhteistyö
 980,rakennusteline
 981,rakennusteollisuus
 982,rakennustyömaa
-983,rakennustyömaa
 984,rakennustyönjohtaja
 985,rakennustyöntekijä
 986,rakennustyöryhmäsopimus
@@ -990,12 +954,10 @@
 988,rakennustyöturvallisuusohjeet
 989,rakennusurakointiyhtiö
 990,rakennusurakoitsija
-991,rakennusurakoitsija
 992,rakennusurakoitsijayhteistyö
 993,rakennusvalvoja
 994,rakennusvalvontavirasto
 995,rakennusvalvontayksikkö
-996,rakennusvalvontayksikkö
 997,rakennusvirhe
 998,rakennusyritys
 999,rakennusyritysyhteistyö
@@ -1025,7 +987,6 @@
 1023,sähköasennusprojektit
 1024,sähköasennusstrategia
 1025,sähköasentaja
-1026,sähköasentaja
 1027,sähköauto
 1028,sähköautojärjestelmä
 1029,sähköautojärjestelmät
@@ -1051,7 +1012,6 @@
 1049,sähköposti
 1050,sähköpostipalvelu
 1051,sähköpostiviesti
-1052,sähköpostiviesti
 1053,sähkötekniikanvalmistaja
 1054,sähkötekniikanvalvonta
 1055,sähkötekniikkainsinööri
@@ -1064,7 +1024,6 @@
 1062,sähköteknologiayksikkö
 1063,sähkötuotanto
 1064,sähkötyökalut
-1065,sähkötyökalut
 1066,sähköverkko
 1067,sähköverkkohallinta
 1068,sähköverkkohanke
@@ -1086,7 +1045,6 @@
 1084,sähkövoimayhtiö
 1085,sähkövoimayksikköanalyysi
 1086,sairaalajärjestelmä
-1087,sairaalajärjestelmä
 1088,sairaalajärjestelyt
 1089,sairaalajohtaminen
 1090,sairaalaosasto
@@ -1102,7 +1060,6 @@
 1100,sairaanhoitoinsinööri
 1101,sairaanhoitopalvelu
 1102,sairaanhoitopiiri
-1103,sairaanhoitopiiri
 1104,sairaanhoitotarpeet
 1105,sairaanhoitotarvikevarasto
 1106,sairaanhoitotarvikkeet
@@ -1142,7 +1099,6 @@
 1140,talouspolitiikkasuunnitelma
 1141,taloustiede
 1142,taloustutkimus
-1143,taloustutkimus
 1144,taloyhtiöjäsen
 1145,talvikelitiedotus
 1146,talvikenkä
@@ -1156,7 +1112,6 @@
 1154,talvitienhoito
 1155,talvivaellus
 1156,teatteriesitys
-1157,teatteriesitys
 1158,teknologiaosaaminen
 1159,teknologiasovellukset
 1160,teknologiateollisuus
@@ -1172,7 +1127,6 @@
 1170,tiedekeskus
 1171,tiedekeskusohjelmistot
 1172,tiedekirjasto
-1173,tiedekirjasto
 1174,tiedekunnanopiskelijajärjestö
 1175,tiedekunta
 1176,tiedonkulku
@@ -1191,19 +1145,15 @@
 1189,tietojenkäsittelyopettaja
 1190,tietojenkäsittelyratkaisut
 1191,tietojenkäsittelytiede
-1192,tietojenkäsittelytiede
 1193,tietojenkäsittelytutkija
 1194,tietokantajärjestelmä
-1195,tietokantajärjestelmä
 1196,tietokone
 1197,tietokoneammattilainen
 1198,tietokoneasiantuntija
-1199,tietokoneasiantuntija
 1200,tietokoneasiantuntijapalvelut
 1201,tietokonehuolto
 1202,tietokonehuoltopalvelu
 1203,tietokoneinsinööri
-1204,tietokoneinsinööri
 1205,tietokoneinsinööriprojekti
 1206,tietokonejärjestelmäratkaisut
 1207,tietokonejärjestelmätarkastus
@@ -1237,7 +1187,6 @@
 1235,tietoliikennekehitysprojekti
 1236,tietoliikenneohjauskeskus
 1237,tietoliikenneohjelmatutkimus
-1238,tietoliikenneohjelmatutkimus
 1239,tietoliikenneohjelmayksikkö
 1240,tietoliikenneoperaattori
 1241,tietoliikennepalvelu
@@ -1256,9 +1205,7 @@
 1254,tietoliikenneverkostokehitys
 1255,tietoliikenneyhteistyömalli
 1256,tietoliikenneyhteys
-1257,tietoliikenneyhteys
 1258,tietotekniikkainsinöörikoulutus
-1259,tietotekniikkainsinöörikoulutus
 1260,tietotekniikkakeskus
 1261,tietotekniikkaohjelmointiprojekti
 1262,tietotekniikkaratkaisujenhallinta
@@ -1348,7 +1295,6 @@
 1346,turvallisuussuunnitteluyksikkö
 1347,turvallisuustarkasteluraportti
 1348,turvallisuustarkastus
-1349,turvallisuustarkastus
 1350,turvallisuustarkastusyhtiö
 1351,turvallisuusteknologia
 1352,turvallisuusteknologiakehitys
@@ -1366,15 +1312,12 @@
 1364,turvallisuustyöyksikkö
 1365,turvallisuusvalvontahanke
 1366,turvallisuusvalvontakeskus
-1367,turvallisuusvalvontakeskus
 1368,turvallisuusvalvontastrategia
 1369,turvallisuusvalvontatoimisto
 1370,turvallisuusyhteistyöhanke
-1371,turvallisuusyhteistyöhanke
 1372,turvallisuusyhteistyöstrategia
 1373,tutkimuskeskusprojekti
 1374,tutkimuslaitos
-1375,tutkimuslaitos
 1376,tutkimuslaitosjohtaja
 1377,tutkimuslaitosyhteistyö
 1378,tutkimusprojekti
@@ -1398,7 +1341,6 @@
 1396,työehtosopimus
 1397,työelämätutkimus
 1398,työhyvinvointi
-1399,työhyvinvointi
 1400,työhyvinvointimalli
 1401,työkalupakki
 1402,työmatkakorvaus
@@ -1527,8 +1469,6 @@
 1525,vesijohtotyöt
 1526,vesijohtoverkkokartoitus
 1527,vesijohtoverkosto
-1528,vesijohtoverkosto
-1529,vesijohtoverkosto
 1530,vesijohtovesi
 1531,vesilaitos
 1532,vesilaitoshuolto
@@ -1571,7 +1511,6 @@
 1569,yhteiskuntajärjestelmä
 1570,yhteiskuntapolitiikka
 1571,yhteiskuntasopimus
-1572,yhteiskuntasopimus
 1573,yhteiskuntasuunnitelmaprojekti
 1574,yhteiskuntatiede
 1575,yhteiskuntavastuu
@@ -1627,7 +1566,6 @@
 1625,ympäristötutkimustulokset
 1626,ympäristötutkimustulos
 1627,ympäristövahinko
-1628,ympäristövahinko
 1629,ympäristövaikutukset
 1630,ympäristövaikutus
 1631,ympäristövalvoja
