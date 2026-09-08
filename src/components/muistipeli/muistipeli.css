@@ -16,6 +16,21 @@
   padding-top: 5em;
 }
 
+.sanonnatfound p {
+  font-style: italic;
+}
+
+#sanontamuistipeli {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  width: 75vw;
+  row-gap: 1em;
+  column-gap: 1em;
+  padding: 3em;
+  padding-top: 5em;
+}
+
 .kortti {
   background-color: var(--gray);
   border: none;
@@ -44,6 +59,11 @@
     aspect-ratio: 1 / 1;
   }
 
+  #sanontamuistipeli {
+    width: calc(100% - 6em);
+    aspect-ratio: 1 / 1;
+  }
+
   .kortti {
     border-radius: 5px;
   }
@@ -60,6 +80,16 @@
     border-radius: 3px;
     padding-inline: 1em;
     width: calc(100% - 2em);
+  }
+
+  #sanontamuistipeli {
+    border-radius: 3px;
+    padding-inline: 1em;
+    width: calc(100% - 2em);
+  }
+
+  #sanontamuistipeli .kortti {
+    font-size: 1em;
   }
 }
 
@@ -100,6 +130,26 @@
   align-items: flex-start;
   justify-content: space-evenly;
   margin-top: 2em;
+}
+
+#endfoundsanonta {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 2em;
+  row-gap: 1em;
+  column-gap: 1em;
+}
+
+#endfoundsanonta div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#endfoundsanonta i {
+  font-style: italic;
+  text-align: center;
 }
 
 .wordclassfound {

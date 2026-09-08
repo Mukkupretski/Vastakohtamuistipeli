@@ -2,7 +2,7 @@ import 'react'
 import './muistipeli/muistipeli.css'
 import { useEffect, useRef, useState } from 'react'
 import Kortti from './muistipeli/Kortti';
-import Enddialog from './muistipeli/Enddialog';
+import Enddialog from './muistipeli/VastaEnddialog.tsx';
 
 type Pairlist = [string, string][];
 type Wordclass = "adjektiivit" | "verbit" | "substantiivit" | "muut";
@@ -27,7 +27,7 @@ type Gamestate = {
 const odotusaika: number = 0.5
 
 // returns random permutation of {0,..., n-1}
-function permute(n: number) {
+export function permute(n: number) {
   let ls: number[] = [];
   for (let index = 0; index < n; index++) {
     ls.push(index)
@@ -42,7 +42,7 @@ function permute(n: number) {
 }
 
 
-function combine(n: number, k: number) {
+export function combine(n: number, k: number) {
   let ls = [];
   for (let index = 0; index < n; index++) {
     ls.push(index)
@@ -55,7 +55,7 @@ function combine(n: number, k: number) {
   }
   return res;
 }
-function pickK<T>(list: T[], k: number): T[] {
+export function pickK<T>(list: T[], k: number): T[] {
   const order = combine(list.length, k)
   const res = [
 
@@ -219,7 +219,7 @@ export default function Vastakohtamuistipeli() {
       <div id='muistipeli' style={{
       }}>
         {gamestate.cards.map(c => {
-          return <Kortti pos={c.pos} key={c.pos} teksti={c.word.word} käännetty={c.flipped} onClick={() => {
+          return <Kortti rows={4} pos={c.pos} key={c.pos} teksti={capital(c.word.word)} käännetty={c.flipped} onClick={() => {
             if (!gamestate.canPlay) return
             setGamestate(gs => ({
               ...gs, cards: gs.cards.map((ca) => {
