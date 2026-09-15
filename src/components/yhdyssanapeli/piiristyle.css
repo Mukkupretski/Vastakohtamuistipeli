@@ -1,0 +1,49 @@
+#piirintausta {
+  position: absolute;
+  z-index: -1;
+  aspect-ratio: 1 / 1;
+  height: 80%;
+}
+
+#yhdyssanapiiri {
+  padding-top: 10px;
+  width: 75%;
+  height: 100vh;
+  align-items: center;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#yhdyssanapeli {
+  display: flex;
+
+}
+
+#yhdyssanavarasto {
+  width: 75%;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  border: 1px solid var(--dblue);
+  justify-items: center;
+  align-content: start;
+  height: 75%;
+  padding-inline: 1rem;
+  padding-top: 1rem;
+}
+
+
+#yhdyssanavoitto {
+  height: 10vh;
+  width: 20rem;
+}
+
+@media (width <=1100px) {
+  #piirintausta {
+    height: unset;
+    width: 90%;
+  }
+}

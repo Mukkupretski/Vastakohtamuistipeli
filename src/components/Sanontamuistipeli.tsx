@@ -23,7 +23,7 @@ export default function Sanontamuistipeli() {
   const [sanonnat, setSanonnat] = useState<Sanonta[]>([])
   const [gamestate, setGamestate] = useState<Gamestate>({ cards: [], canPlay: false, found: [] });
   useEffect(() => {
-    fetch(`/sanat/sanonnat.txt`).then(res => res.text()).then(sanalista => setSanonnat(() => {
+    fetch(`/sanat/muistipelikortit/sanonnat.txt`).then(res => res.text()).then(sanalista => setSanonnat(() => {
       return sanalista.split("\n").filter(asia => asia).map(sanamasiina =>
         [sanamasiina.split(";")[0], sanamasiina.split(";")[1]]
       )

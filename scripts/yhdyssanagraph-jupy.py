@@ -65,6 +65,13 @@ l=[
 
 666, 138, 678, 111, 48, 116
 ]
+with open("./output/abToSana.txt","w") as f:
+    for k,v in wiktionary_compounds.items():
+        f.write(f"{k[0]},{k[1]},{v}\n")
+
+with open("./output/aToSana.txt","w") as f:
+    for k,v in wiktionary_indexes.items():
+        f.write(f"{k},{v}\n")
 
 for i in range(len(l)):
     print(wiktionary_compounds[(l[i],l[(i+1)%len(l)])])

@@ -146,7 +146,7 @@ export default function Vastakohtamuistipeli() {
   // Lataa sanat
   useEffect(() => {
     classes.forEach(luokka =>
-      fetch(`/sanat/${luokka}.txt`).then(res => res.text()).then(sanalista => setWords(s => {
+      fetch(`/sanat/muistipelikortit/${luokka}.txt`).then(res => res.text()).then(sanalista => setWords(s => {
         const s2 = { ...s }
         s2[luokka] = sanalista.split("\n").filter(asia => asia).map(sanamasiina =>
           [sanamasiina.split(" ")[0], sanamasiina.split(" ")[1]]
