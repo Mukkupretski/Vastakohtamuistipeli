@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom'
 import Vastakohtamuistipeli from './components/Vastakohtamuistipeli'
 import Sanontamuistipeli from './components/Sanontamuistipeli'
 import Yhdyssanapiiri from './components/Yhdyssanapiiri'
-
 function App() {
 
   return (
