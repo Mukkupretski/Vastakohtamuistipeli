@@ -1,6 +1,5 @@
 #piirintausta {
   position: absolute;
-  z-index: 0;
   aspect-ratio: 1 / 1;
   height: 60vh;
   background-image: url(/icons/Piirintausta.png);
@@ -13,7 +12,7 @@
 
 }
 
-#piirintausta * {
+#piirintausta .piiriosa {
   position: relative;
   z-index: 2;
 }
@@ -27,29 +26,42 @@
 }
 
 #piirintausta .piirirow {
+  padding-inline: 10%;
+  display: flex;
   flex-direction: row;
-  width: 100%;
-  justify-content: space-evenly;
+  width: 80%;
+  justify-content: space-between;
+}
+
+#piirintausta .piirirow> :only-child {
+  margin-inline: auto;
+}
+
+#piirintausta .piirirowreverse> :only-child {
+  margin-inline: auto;
 }
 
 #piirintausta .piirirowreverse {
 
+  padding-inline: 10%;
+  display: flex;
   flex-direction: row-reverse;
-  width: 100%;
+  justify-content: space-between;
+  width: 80%;
 }
 
 #piirintausta .piiricol {
+  display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
 
 #piirintausta .piiricolreverse {
-  flex-direction: column-reverse;
-}
-
-#piirintausta .piiriosa {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-evenly;
 }
+
 
 #yhdyssanapiiri {
   padding-top: 10px;
@@ -60,16 +72,9 @@
   position: relative;
   flex-direction: column;
   justify-content: flex-start;
+  box-sizing: border-box;
 }
 
-.segment {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: left center;
-  border-top: 2px dashed #8F8F8F;
-  z-index: 1;
-}
 
 #yhdyssanapeli {
   display: flex;
