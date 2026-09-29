@@ -1,11 +1,16 @@
 import pandas as pd
-import fastparquet
 
 # read or write
 
-with open('./output/wiktionary-yhdyssanat', 'r') as f:
+wiktionary = []  # [word1, word2, compound][]
+wiktionary_edges = []
+wiktionary_graph = dict()
+wiktionary_units = []
+wiktionary_indexes = dict()
+wiktionary_compounds = dict()
+with open("./output/wiktionary-yhdyssanat", "r") as f:
     for line in f:
-        yhdyssana = line.rstrip().split(',')
+        yhdyssana = line.rstrip().split(",")
         # If yhdyssana and first part start with different letter, it is probably bad
         # remove stuff such as talous + alue = erikoistalousalue
         if yhdyssana[0][0] != yhdyssana[2][0]:
@@ -14,6 +19,7 @@ with open('./output/wiktionary-yhdyssanat', 'r') as f:
 
 print(wiktionary)
 # wiktionary dataset
+
 
 def compactify(edges):
     indeg = set()
@@ -24,12 +30,8 @@ def compactify(edges):
     useful = indeg & outdeg
     smallgraph = [edge for edge in edges if (edge[0] in useful and edge[1] in useful)]
     return smallgraph
-wiktionary = [] # [word1, word2, compound][]
-wiktionary_edges = []
-wiktionary_graph = dict()
-wiktionary_units = []
-wiktionary_indexes = dict()
-wiktionary_compounds = dict()
+
+
 for compound in wiktionary:
     w1 = compound[0]
     w2 = compound[1]
@@ -43,39 +45,35 @@ for compound in wiktionary:
         wiktionary_units.append(w2)
     i1 = wiktionary_indexes[w1]
     i2 = wiktionary_indexes[w2]
-    wiktionary_edges.append([i1,i2])
+    wiktionary_edges.append([i1, i2])
     wiktionary_graph[i1] = []
-    wiktionary_compounds[(i1,i2)] = compound[2]
+    wiktionary_compounds[(i1, i2)] = compound[2]
 
 prev = len(wiktionary_edges)
 while True:
     wiktionary_edges = compactify(wiktionary_edges)
     if len(wiktionary_edges) == prev:
         break
-    prev = len(wiktionary_edges) 
+    prev = len(wiktionary_edges)
 
 for edge in wiktionary_edges:
     wiktionary_graph[edge[0]].append(edge[1])
 len(wiktionary_edges)
 
 
-l=[219, 308, 1200, 1313, 234]
-l=[222, 1183, 1773, 369, 1301]
-l=[
-
-666, 138, 678, 111, 48, 116
-]
-with open("./output/abToSana.txt","w") as f:
-    for k,v in wiktionary_compounds.items():
+l = [219, 308, 1200, 1313, 234]
+l = [222, 1183, 1773, 369, 1301]
+l = [666, 138, 678, 111, 48, 116]
+with open("./output/abToSana.txt", "w") as f:
+    for k, v in wiktionary_compounds.items():
         f.write(f"{k[0]},{k[1]},{v}\n")
 
-with open("./output/aToSana.txt","w") as f:
-    for k,v in wiktionary_indexes.items():
+with open("./output/aToSana.txt", "w") as f:
+    for k, v in wiktionary_indexes.items():
         f.write(f"{k},{v}\n")
 
 for i in range(len(l)):
-    print(wiktionary_compounds[(l[i],l[(i+1)%len(l)])])
-
+    print(wiktionary_compounds[(l[i], l[(i + 1) % len(l)])])
 
 
 # cyclefind naive - no duplicates by just taking unique minimum
@@ -86,8 +84,10 @@ def construct_mapgraph(graph):
             res[edge[0]] = []
         res[edge[0]].append(edge[1])
     return res
+
+
 def dfs(graph, lim, curr, visited, res, i):
-    if(i > lim-1):
+    if i > lim - 1:
         return
     start = curr[0]
     node = curr[-1]
@@ -104,9 +104,10 @@ def dfs(graph, lim, curr, visited, res, i):
             continue
         curr.append(neigh)
         visited.add(neigh)
-        dfs(graph,lim,curr,visited,res,i+1)
+        dfs(graph, lim, curr, visited, res, i + 1)
         curr.pop()
         visited.remove(neigh)
+
 
 def find_cycles(graph, lim):
     mapgraph = construct_mapgraph(graph)
@@ -114,31 +115,32 @@ def find_cycles(graph, lim):
     for i in mapgraph.keys():
         visited = set()
         curr = [i]
-        dfs(mapgraph, lim,curr,visited,res,0)
+        dfs(mapgraph, lim, curr, visited, res, 0)
     return res
+
 
 cycles = find_cycles(smallgraph, 16)
 
 # print cycles !!df on sekaisin ATM
 for cycle in cycles:
-    print('\n')
+    print("\n")
     for i in cycle:
-        print(compound(i,df) ,end=' ')
-
-
+        print(compound(i, df), end=" ")
 
 
 ## hugging face dataset
 
 # should have Compound Word, Word1 and Word2
-df = pd.read_parquet("hf://datasets/nessa01macias/compound-words-finnish/data/train-00000-of-00001.parquet")
+df = pd.read_parquet(
+    "hf://datasets/nessa01macias/compound-words-finnish/data/train-00000-of-00001.parquet"
+)
 df = df.drop_duplicates()
 
 df.isna().sum()
 df.info()
 
 # To csv
-df['Compound Word'].to_csv('output/data.csv', index=True)
+df["Compound Word"].to_csv("output/data.csv", index=True)
 
 # generate graph
 graph = []
@@ -146,20 +148,21 @@ graph = []
 for i, rowi in df.iterrows():
     for j, rowj in df.iterrows():
         # link to word with same start as current end
-        if rowi['Word2'] == rowj['Word1']:
-            graph.append([i,j])
+        if rowi["Word2"] == rowj["Word1"]:
+            graph.append([i, j])
 
 # read
-with open('output/graph.txt', 'r', encoding='utf-8') as f:
-    graph = [[int(line.split(" ")[0]),int(line.split(" ")[1])] for line in f.readlines()] 
+with open("output/graph.txt", "r", encoding="utf-8") as f:
+    graph = [
+        [int(line.split(" ")[0]), int(line.split(" ")[1])] for line in f.readlines()
+    ]
 len(graph)
 for i in range(200, 225):
-    print(compound(graph[i][0],df),compound(graph[i][1],df))
-
+    print(compound(graph[i][0], df), compound(graph[i][1], df))
 
 
 # write
-with open('output/graph.txt', 'w', encoding='utf-8') as f:
+with open("output/graph.txt", "w", encoding="utf-8") as f:
     for elem in graph:
         f.write(f"{elem[0]} {elem[1]}\n")
 
@@ -176,17 +179,22 @@ smallgraph
 len(smallgraph)
 
 # write without orphans
-with open('output/smallgraph.txt', 'w', encoding='utf-8') as f:
+with open("output/smallgraph.txt", "w", encoding="utf-8") as f:
     for elem in smallgraph:
         f.write(f"{elem[0]} {elem[1]}\n")
 
 # read small
-with open('output/smallgraph.txt', 'r', encoding='utf-8') as f:
-    smallgraph = [[int(line.split(" ")[0]),int(line.split(" ")[1])] for line in f.readlines()] 
+with open("output/smallgraph.txt", "r", encoding="utf-8") as f:
+    smallgraph = [
+        [int(line.split(" ")[0]), int(line.split(" ")[1])] for line in f.readlines()
+    ]
 smallgraph
 
+
 # print stuff
-def compound(i,data):
+def compound(i, data):
     return data.loc[i]["Compound Word"]
+
+
 for i in range(20):
     print(compound(smallgraph[i][0]), compound(smallgraph[i][1]))

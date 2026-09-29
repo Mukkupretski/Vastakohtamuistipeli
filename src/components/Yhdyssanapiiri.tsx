@@ -29,7 +29,6 @@ import { Draggable } from './util/Draggable';
 // }
 //TODO: just 2 bottom
 function partition(n: number) {
-  const floor: number = Math.floor(n / 4)
   const top = (n > 7 ? 2 - (n % 2) : 1)
   const bottom = (n > 7 ? 2 : 1 + (n % 2))
   const side = (n - top - bottom) / 2

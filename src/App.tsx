@@ -4,7 +4,6 @@ import Vastakohtamuistipeli from './components/Vastakohtamuistipeli'
 import Sanontamuistipeli from './components/Sanontamuistipeli'
 import Yhdyssanapiiri from './components/Yhdyssanapiiri'
 function App() {
-
   return (
     <Routes>
       <Route path="" element={<></>}>
