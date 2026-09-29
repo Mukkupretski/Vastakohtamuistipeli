@@ -1,4 +1,4 @@
-import { Fragment, use, useEffect, useRef, useState } from 'react';
+import { Fragment, use, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { DragDropProvider } from '@dnd-kit/react';
 import './yhdyssanapeli/dropstyle.css'
 import './yhdyssanapeli/piiristyle.css'
@@ -35,12 +35,19 @@ function partition(n: number) {
   const splits = [0, top - 1, top + side - 1, top + side + bottom - 1]
   return splits
 }
+const vaikeustasot: Record<string, number> = {
+  "Aloittelija": 4,
+  "Helppo": 6,
+  "Keskitaso": 8,
+  "Vaikea": 10,
+  "Mestari": 12,
+}
 function drawSegment(r1: DOMRect, r2: DOMRect, text?: string) {
-  const x1 = (r1.left + r1.right) / 2
-  const y1 = (r1.top + r1.bottom) / 2
+  const x1 = (r1.left + r1.right) / 2 + window.scrollX
+  const y1 = (r1.top + r1.bottom) / 2 + window.scrollY
 
-  const x2 = (r2.left + r2.right) / 2
-  const y2 = (r2.top + r2.bottom) / 2
+  const x2 = (r2.left + r2.right) / 2 + window.scrollX
+  const y2 = (r2.top + r2.bottom) / 2 + window.scrollY
 
 
   const dx = x2 - x1
@@ -73,15 +80,18 @@ function extractChildren(piirintausta: HTMLDivElement) {
 
 //FIXME: wait for numeroSanaksi to load
 export default function Yhdyssanapiiri() {
-  const piirinKoko = 5
+  const [piirinKoko, setPiirinkoko] = useState<number>(4)
   const piiriRef = useRef<HTMLDivElement | null>(null)
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const [started, setStarted] = useState<boolean>(false)
   const [piiri, setPiiri] = useState<number[]>([])
   // use wordnum as string as key
   const [numeroSanaksi, setNumeroSanaksi] = useState<Record<string, string>>({})
   // use wordnums as "m,n" as key
   const [numerotSanaksi, setNumerotSanaksi] = useState<Record<string, string>>({})
   // maps draggable element to its slot
-  const [draggablePoses, setDraggablePoses] = useState<(number | undefined)[]>(Array(piirinKoko).fill(undefined));
+  const [draggablePoses, setDraggablePoses] = useState<(number | undefined)[]>([]);
+  const [hasWon, setHaswon] = useState<boolean>(false)
   const targetCount = piirinKoko
   const targets = Array.from({ length: targetCount }, (_, i) => i);
   const splits = partition(targetCount)
@@ -109,19 +119,50 @@ export default function Yhdyssanapiiri() {
     )).catch(console.log)
 
   }
-  useEffect(() => {
+  const onRestart = () => {
+    setStarted(false)
+    dialogRef.current?.showModal()
+  }
+  const startGame = () => {
+    setStarted(true)
+    Array(piirinKoko).fill(undefined)
+    setHaswon(false)
+    setPiiri([])
+    setNumeroSanaksi({})
+    setNumerotSanaksi({})
+    setDraggablePoses(Array(piirinKoko).fill(undefined))
     getGame()
+  }
+  //TODO: REMOVE
+  useEffect(() => {
+    dialogRef.current?.showModal()
   }, [])
   const [segments, setSegments] = useState<React.JSX.Element[]>([])
+  const win = () => {
+    console.log("win")
+    setHaswon(true)
+  }
+  useEffect(() => {
+
+    for (let index = 0; index < piirinKoko; index++) {
+      const ps1 = draggablePoses.findIndex(v => v == (index))
+      const ps2 = draggablePoses.findIndex(v => v == (index + 1) % piirinKoko)
+      if (ps1 !== -1 && ps2 !== -1) {
+        const stri = getYhdyssana(piiri[ps1], piiri[ps2])
+        if (stri === "") return
+      } else return
+    }
+    win()
+  }, [draggablePoses])
   const redrawSegments = () => {
     if (piiriRef.current) {
       setSegments([])
       const boxes = extractChildren(piiriRef.current!)
       for (let index = 0; index < boxes.length; index++) {
-        const ps1 = draggablePoses.find(v => v == (index))
-        const ps2 = draggablePoses.find(v => v == (index + 1) % boxes.length)
+        const ps1 = draggablePoses.findIndex(v => v == (index))
+        const ps2 = draggablePoses.findIndex(v => v == (index + 1) % boxes.length)
         let stri = ""
-        if (ps1 && ps2) {
+        if (ps1 !== -1 && ps2 !== -1) {
           stri = getYhdyssana(piiri[ps1], piiri[ps2])
 
         }
@@ -137,14 +178,14 @@ export default function Yhdyssanapiiri() {
     return () => {
       window.removeEventListener("resize", redrawSegments);
     };
-  }, [])
-  useEffect(() => {
+  }, [draggablePoses, numeroSanaksi, numerotSanaksi])
+  useLayoutEffect(() => {
     redrawSegments()
-  }, [piiri, draggablePoses])
+    console.log("hi")
+  }, [draggablePoses, numeroSanaksi, numerotSanaksi])
   useEffect(() => {
     if (piiri.length == 0) return
     const k1 = piiri.map(osa => osa.toString())
-    const k2 = piiri.map((osa, i) => `${osa},${piiri[(i + 1) % piiri.length]}`)
     fetch("/sanat/sanapiirit/aToSana.txt").then(res => res.text()).then(atoword => {
       const res: Record<string, string> = {};
       atoword.split("\n").forEach((row) => {
@@ -156,12 +197,16 @@ export default function Yhdyssanapiiri() {
       setNumeroSanaksi(res)
 
     })
-    fetch("/sanat/sanapiirit/abToSana.txt").then(res => res.text()).then(abtoword => {
+  }, [piiri])
+  useEffect(() => {
 
+    fetch("/sanat/sanapiirit/abToSana.txt").then(res => res.text()).then(abtoword => {
       const res: Record<string, string> = {};
       abtoword.split("\n").forEach((row) => {
-        const pref = k2.find(osa => row.startsWith(osa + ","))
-        if (!pref) return
+        const n1 = row.split(",")[0]
+        const n2 = row.split(",")[1]
+        const pref = n1 + "," + n2
+        if (!(piiri.find(v => v === parseInt(n1)) && piiri.find(v => v === parseInt(n2)))) return
         const word = row.split(",")[2]
         res[pref] = word
       })
@@ -176,57 +221,80 @@ export default function Yhdyssanapiiri() {
       {draggableInside !== -1 ? <Draggable contained id={d!} key={d}>{d}</Draggable> : <></>}
     </Droppable>
   }
-  if (Object.keys(numeroSanaksi).length == 0 || Object.keys(numeroSanaksi).length == 0) return <></>
-  console.log(numeroSanaksi)
-  console.log(numerotSanaksi)
+  const dataLoaded: boolean = Object.keys(numeroSanaksi).length == 0 || Object.keys(numeroSanaksi).length == 0;
   return (
     <>
-      <DragDropProvider
-        onDragEnd={(event) => {
-          if (event.canceled) return;
-          const droppedTo: string | undefined = event.operation.target?.id.toString()
-          const dragged: string | undefined = event.operation.source?.id.toString()
-          if (dragged == undefined) return
+      <dialog id="difficulty" ref={dialogRef}>
+        <div>
+          {Object.entries(vaikeustasot).map((v) => {
+            return <button className='diffopt' onClick={() => {
+              setPiirinkoko(v[1])
+            }}>{v[0]}</button>
+          })}
+          <button className='start'>Aloita</button>
+        </div>
+      </dialog>
+      {(started && dataLoaded) ?
+        <DragDropProvider
+          onDragEnd={(event) => {
+            if (event.canceled) return;
+            const droppedTo: string | undefined = event.operation.target?.id.toString()
+            const dragged: string | undefined = event.operation.source?.id.toString()
+            if (dragged == undefined) return
 
-          setDraggablePoses((prev) => {
-            let next = [...prev]
-            if (droppedTo == undefined) {
-              next[piiri.findIndex(v => numeroSanaksi[v] == dragged)] = undefined
-            } else {
-              // clear previous from that slot
-              next = next.map(slot => {
-                if (slot !== parseInt(droppedTo)) return slot
-                return undefined
-              })
-              next[piiri.findIndex(v => numeroSanaksi[v] == dragged)] = parseInt(droppedTo)
-            }
-            return next
-          });
-        }}
-      >
-        <div id="yhdyssanapeli">
-          <div id="yhdyssanapiiri">
-            {segments}
-            <div ref={piiriRef} id="piirintausta" >
-              <div className='piiriosa piirirow'>{targetsPart[0].map(getBox)}</div>
-              <div className='colcontrol'>
-                <div className='piiriosa piiricolreverse'>{targetsPart[3].map(getBox)}</div>
-                <div className='piiriosa piiricol'>{targetsPart[1].map(getBox)}</div>
+            setDraggablePoses((prev) => {
+              let next = [...prev]
+              if (droppedTo == undefined) {
+                next[piiri.findIndex(v => numeroSanaksi[v] == dragged)] = undefined
+              } else {
+                // clear previous from that slot
+                next = next.map(slot => {
+                  if (slot !== parseInt(droppedTo)) return slot
+                  return undefined
+                })
+                next[piiri.findIndex(v => numeroSanaksi[v] == dragged)] = parseInt(droppedTo)
+              }
+              return next
+            });
+          }}
+        >
+          <div id="yhdyssanapeli">
+            <div id="yhdyssanapiiri">
+              {segments}
+              <div
+                ref={piiriRef}
+                id="piirintausta" >
+                <div className='piiriosa piirirow'>{targetsPart[0].map(getBox)}</div>
+                <div className='colcontrol'>
+                  <div className='piiriosa piiricolreverse'>{targetsPart[3].map(getBox)}</div>
+                  <div className='piiriosa piiricol'>{targetsPart[1].map(getBox)}</div>
+                </div>
+                <div className='piiriosa piirirowreverse'>{targetsPart[2].map(getBox)}</div>
               </div>
-              <div className='piiriosa piirirowreverse'>{targetsPart[2].map(getBox)}</div>
+              <div id={`yhdyssanavoitto`} className={`${hasWon ? "gg" : ""}`} >
+                {hasWon ? <><h2>ONNISTUIT</h2>
+                  <div className="buttonrow">
+                    <button className="iconbutton" aria-label="Poistu">
+                      <img src="/icons/Home.png"></img>
+                    </button>
+                    <button className="iconbutton" onClick={onRestart} aria-label="Pelaa uudelleen">
+                      <img src="/icons/Restart.png"></img>
+                    </button>
+                  </div>
+                </> : <></>}
+              </div>
             </div>
-            <div id="yhdyssanavoitto" ></div>
-          </div>
-          <div className='bluebox defaultdrop'>
-            <h2 className='title-1'>VARASTO</h2>
-            <div id="yhdyssanavarasto">
-              {piiri.map((d, i) => {
-                return draggablePoses[i] === undefined ? <Draggable id={numeroSanaksi[d]} key={d}>{numeroSanaksi[d]}</Draggable> : <Fragment key={i}></Fragment>
-              })}
-            </div>
-          </div></div>
+            <div className='bluebox defaultdrop'>
+              <h2 className='title-1'>VARASTO</h2>
+              <div id="yhdyssanavarasto">
+                {piiri.map((d, i) => {
+                  return draggablePoses[i] === undefined ? <Draggable id={numeroSanaksi[d]} key={d}>{numeroSanaksi[d]}</Draggable> : <Fragment key={i}></Fragment>
+                })}
+              </div>
+            </div></div>
 
-      </DragDropProvider>
+        </DragDropProvider>
+        : <></>}
     </>
   );
 };
